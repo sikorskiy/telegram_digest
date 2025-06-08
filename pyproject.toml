@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "telegram-digest"
+version = "0.0.0"
+description = "Telegram channel posts digest generator"
+authors = ["Vasiliy Sikorskiy"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+telethon = "*"
+weasyprint = "*"
+readability-lxml = "*"
+openai = "*"
+jinja2 = "*"
+python-dotenv = "*"
+typer = {extras = ["all"], version = "*"}
+sqlite-utils = "*"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "*"
+black = "*"
+isort = "*"
+ruff = "*"
+pytest = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api" 
