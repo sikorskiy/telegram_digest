@@ -1,27 +1,29 @@
 [tool.poetry]
 name = "telegram-digest"
 version = "0.0.0"
-description = "Telegram channel posts digest generator"
-authors = ["Vasiliy Sikorskiy"]
+description = "Telegram Digest - инструмент для сбора и анализа постов из Telegram каналов"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+packages = [{include = "telegram_digest", from = "src"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-telethon = "*"
-weasyprint = "*"
-readability-lxml = "*"
-openai = "*"
-jinja2 = "*"
-python-dotenv = "*"
-typer = {extras = ["all"], version = "*"}
-sqlite-utils = "*"
+python = "^3.9"
+telethon = "^1.34.0"
+python-dotenv = "^1.0.0"
+click = "^8.1.7"
+html2text = "^2024.2.26"
+firebase-admin = "^6.9.0"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "*"
-black = "*"
-isort = "*"
-ruff = "*"
-pytest = "*"
+pytest = "^8.0.0"
+black = "^24.2.0"
+isort = "^5.13.2"
+mypy = "^1.8.0"
+ruff = "^0.2.2"
 
 [build-system]
 requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api" 
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+telegram-digest = "telegram_digest.cli.app:app" 
