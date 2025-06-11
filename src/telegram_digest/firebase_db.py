@@ -35,15 +35,22 @@ def upsert_post(
     plain_text: Optional[str],
     summary: Optional[str] = None,
     entities: Optional[List[Dict[str, Any]]] = None,
-) -> None:
-    """Добавляет или обновляет пост."""
-    print(f"Сохраняем пост {msg_id} из канала {channel_id}")
-    
-    post_ref = db.collection('posts').document(channel_id).collection('messages').document(str(msg_id))
-    
+) -> bool:
+    """Добавляет или обновляет пост. Возвращает True, если добавлен, иначе False."""
+    # Проверки на валидность поста
+    if not msg_id or not channel_id or not date:
+        return False
+    if plain_text is None or (isinstance(plain_text, str) and not plain_text.strip()):
+        return False
+    if isinstance(plain_text, str) and len(plain_text.split()) < 5:
+        return False
+    doc_id = f"{channel_id}_{msg_id}"
+    doc_ref = db.collection('messages').document(doc_id)
+    if doc_ref.get().exists:
+        return False
     post_data = {
         'msg_id': msg_id,
-        'channel_id': channel_id,
+        'channel': channel_id,
         'date': date,
         'text_html': text_html,
         'plain_text': plain_text,
@@ -51,22 +58,21 @@ def upsert_post(
         'entities': entities or [],
         'updated_at': firestore.SERVER_TIMESTAMP
     }
-    
     try:
-        post_ref.set(post_data, merge=True)
-        print(f"✅ Пост {msg_id} успешно сохранен")
+        doc_ref.set(post_data, merge=True)
+        return True
     except Exception as e:
-        print(f"❌ Ошибка при сохранении поста {msg_id}: {str(e)}")
+        print(f"[ERROR] Ошибка при сохранении поста {msg_id}: {str(e)}")
         raise
 
 def get_posts(
     channel_id: str,
     start_date: Optional[datetime] = None,
     end_date: Optional[datetime] = None,
-    limit: int = 100
+    limit: int = 10
 ) -> List[Dict[str, Any]]:
     """Получает посты из канала за указанный период."""
-    query = db.collection('posts').document(channel_id).collection('messages')
+    query = db.collection('messages').where('channel', '==', channel_id)
     
     if start_date:
         query = query.where('date', '>=', start_date)
@@ -113,19 +119,23 @@ def check_saved_posts(channel_id: str) -> None:
     """Проверяет сохраненные посты для канала."""
     print(f"\nПроверяем сохраненные посты для канала {channel_id}...")
     
-    # Получаем документ канала
-    channel_ref = db.collection('posts').document(channel_id)
-    channel_doc = channel_ref.get()
+    query = db.collection('messages').where('channel', '==', channel_id)
+    messages = list(query.stream())
     
-    if not channel_doc.exists:
-        print(f"❌ Канал {channel_id} не найден в базе данных")
+    if not messages:
+        print(f"❌ Нет постов для канала {channel_id} в коллекции messages")
         return
-    
-    # Получаем все сообщения
-    messages = channel_ref.collection('messages').stream()
-    messages = list(messages)
     
     print(f"✅ Найдено {len(messages)} постов")
     for msg in messages:
         data = msg.to_dict()
-        print(f"- Пост {data['msg_id']} от {data['date']}: {data['plain_text'][:50]}...") 
+        if not data:
+            continue
+        if 'msg_id' not in data or data['msg_id'] is None or 'plain_text' not in data:
+            print(f"[WARNING] Некорректный пост в базе: id={msg.id}, data={data}")
+            continue
+        plain = data.get('plain_text')
+        if not isinstance(plain, str):
+            print(f"[WARNING] Некорректный plain_text (не строка) в посте id={msg.id}: {plain}")
+            plain = ""
+        print(f"- Пост {data['msg_id']} от {data['date']}: {plain[:50]}...") 

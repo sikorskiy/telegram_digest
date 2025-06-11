@@ -13,7 +13,7 @@ async def fetch_posts(
     client: TelegramClient,
     channel_ids: List[str],
     days: int = 1,
-    limit: int = 100
+    limit: int = 10
 ) -> None:
     """
     Загружает посты из указанных каналов за последние N дней.
@@ -47,13 +47,11 @@ async def fetch_posts(
                 # Получаем полную информацию о канале
                 full_channel = await client(GetFullChannelRequest(channel))
                 
-                print(f"Загружаем посты из {channel.title} (@{channel.username})")
-                
                 # Получаем историю сообщений
                 history = await client(GetHistoryRequest(
                     peer=channel,
                     limit=limit,
-                    offset_date=start_date,
+                    offset_date=None,
                     offset_id=0,
                     max_id=0,
                     min_id=0,
@@ -61,11 +59,10 @@ async def fetch_posts(
                     hash=0
                 ))
                 
+                added_count = 0
+                min_date = None
                 # Обрабатываем сообщения
                 for message in history.messages:
-                    if not isinstance(message, Message):
-                        continue
-                    
                     # Конвертируем HTML в текст
                     plain_text = h2t.handle(message.message) if message.message else None
                     
@@ -86,7 +83,7 @@ async def fetch_posts(
                             entities.append(entity_dict)
                     
                     # Сохраняем пост
-                    upsert_post(
+                    result = upsert_post(
                         msg_id=message.id,
                         channel_id=channel_id,
                         date=message.date,
@@ -94,11 +91,13 @@ async def fetch_posts(
                         plain_text=plain_text,
                         entities=entities
                     )
+                    if result:
+                        added_count += 1
+                    # Определяем дату самого старого сообщения
+                    if min_date is None or (message.date and message.date < min_date):
+                        min_date = message.date
                 
-                print(f"Загружено {len(history.messages)} постов из {channel.title}")
-                
-                # Проверяем сохраненные посты
-                check_saved_posts(channel_id)
+                print(f"Канал: {channel.title} (@{channel.username}) | считано: {len(history.messages)}, добавлено: {added_count}, самое старое: {min_date}")
                 
             except ChannelPrivateError:
                 print(f"Не удалось получить доступ к каналу {channel_id}: канал приватный")

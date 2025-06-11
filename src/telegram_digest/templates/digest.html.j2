@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Telegram Digest</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap');
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            margin: 1.5cm;
+            line-height: 1.55;
+            font-size: 14px;
+            color: #222;
+        }
+        .post {
+            margin-bottom: 32px;
+        }
+        .summary {
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+        .text {
+            margin-bottom: 8px;
+        }
+        .divider {
+            border-bottom: 1px solid #eee;
+            margin: 24px 0 16px 0;
+        }
+        .post-date {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        .channel-title {
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2a2a2a;
+        }
+    </style>
+</head>
+<body>
+    <h2>Telegram Digest<br>
+        <small>{{ date_from.strftime('%d.%m.%Y') }} — {{ (date_to - timedelta(days=1)).strftime('%d.%m.%Y') }}</small>
+    </h2>
+    {# Группируем посты по каналам #}
+    {% set grouped = {} %}
+    {% for post in posts %}
+        {% set _ = grouped.setdefault(post.channel, []).append(post) %}
+    {% endfor %}
+
+    {% for channel, channel_posts in grouped.items() %}
+        <div class="channel-title">{{ channel }}</div>
+        {% for post in channel_posts %}
+            <div class="post">
+                <div class="post-date">{{ post.date.strftime('%d.%m.%Y %H:%M') if post.date else '' }}</div>
+                <div class="summary">{{ post.summary }}</div>
+                <div class="text">{{ post.text_html|safe }}</div>
+            </div>
+            {% if not loop.last %}<div class="divider"></div>{% endif %}
+        {% endfor %}
+    {% endfor %}
+</body>
+</html> 

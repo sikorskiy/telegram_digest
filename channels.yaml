@@ -1,0 +1,23 @@
+channels:
+  - id: "@cryptoEssay"
+    enabled: true
+  - id: "@grebenukm"
+    enabled: true
+  - id: "@ilyamutovin"
+    enabled: true
+  - id: "@seeallochnaya"
+    enabled: true
+  - id: "@sergiobulaev"
+    enabled: true
+  - id: "@makecryptogreat"
+    enabled: true
+  - id: "@Victor_Osyka"
+    enabled: true
+  - id: "@ai_volution"
+    enabled: true
+  - id: "@tasteofrain"
+    enabled: true
+  - id: "@scienceofstartup"
+    enabled: true
+  - id: "@ruslanlearns"
+    enabled: true
