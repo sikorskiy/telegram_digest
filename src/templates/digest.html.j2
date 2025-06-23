@@ -14,13 +14,65 @@
         }
         .post {
             margin-bottom: 32px;
+            page-break-inside: avoid;
         }
         .summary {
             font-style: italic;
             margin-bottom: 8px;
+            color: #2c5282;
+            background-color: #ebf8ff;
+            padding: 0.5em;
+            border-left: 3px solid #4299e1;
+            border-radius: 3px;
         }
         .text {
             margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .text p {
+            margin: 0.5em 0;
+        }
+        .text strong, .text b {
+            font-weight: bold;
+            color: #1a202c;
+        }
+        .text em, .text i {
+            font-style: italic;
+            color: #4a5568;
+        }
+        .text a {
+            color: #3182ce;
+            text-decoration: underline;
+        }
+        .text code {
+            background-color: #f7fafc;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .text pre {
+            background-color: #f7fafc;
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border-left: 4px solid #e2e8f0;
+        }
+        .text blockquote {
+            border-left: 4px solid #e2e8f0;
+            padding-left: 1em;
+            margin: 1em 0;
+            color: #4a5568;
+            font-style: italic;
+        }
+        .text ul, .text ol {
+            margin: 0.5em 0;
+            padding-left: 1.5em;
+        }
+        .text li {
+            margin: 0.2em 0;
         }
         .divider {
             border-bottom: 1px solid #eee;
@@ -37,7 +89,16 @@
             font-size: 18px;
             font-weight: bold;
             color: #2a2a2a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5em;
         }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2d3748;
+            margin: 1em 0 0.5em 0;
+        }
+        h1 { font-size: 1.5em; }
+        h2 { font-size: 1.3em; }
+        h3 { font-size: 1.1em; }
     </style>
 </head>
 <body>
@@ -55,7 +116,9 @@
         {% for post in channel_posts %}
             <div class="post">
                 <div class="post-date">{{ post.date.strftime('%d.%m.%Y %H:%M') if post.date else '' }}</div>
+                {% if post.summary %}
                 <div class="summary">{{ post.summary }}</div>
+                {% endif %}
                 <div class="text">{{ post.text_html|safe }}</div>
             </div>
             {% if not loop.last %}<div class="divider"></div>{% endif %}

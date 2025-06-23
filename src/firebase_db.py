@@ -34,7 +34,7 @@ def upsert_post(
     text_html: str,
     plain_text: Optional[str],
     summary: Optional[str] = None,
-    entities: Optional[List[Dict[str, Any]]] = None,
+    entities: Optional[List] = None,
 ) -> bool:
     """Добавляет или обновляет пост. Возвращает True, если добавлен, иначе False."""
     # Проверки на валидность поста
@@ -55,9 +55,13 @@ def upsert_post(
         'text_html': text_html,
         'plain_text': plain_text,
         'summary': summary,
-        'entities': entities or [],
         'updated_at': firestore.SERVER_TIMESTAMP
     }
+    
+    # Добавляем entities, если они есть
+    if entities:
+        post_data['entities'] = entities
+    
     try:
         doc_ref.set(post_data, merge=True)
         return True
@@ -131,11 +135,31 @@ def check_saved_posts(channel_id: str) -> None:
         data = msg.to_dict()
         if not data:
             continue
-        if 'msg_id' not in data or data['msg_id'] is None or 'plain_text' not in data:
+        if 'msg_id' not in data or data['msg_id'] is None:
             print(f"[WARNING] Некорректный пост в базе: id={msg.id}, data={data}")
             continue
+        
+        print(f"\n--- Пост {data['msg_id']} от {data['date']} ---")
+        
+        # Проверяем plain_text
         plain = data.get('plain_text')
         if not isinstance(plain, str):
-            print(f"[WARNING] Некорректный plain_text (не строка) в посте id={msg.id}: {plain}")
+            print(f"[WARNING] Некорректный plain_text (не строка): {plain}")
             plain = ""
-        print(f"- Пост {data['msg_id']} от {data['date']}: {plain[:50]}...") 
+        print(f"PLAIN_TEXT ({len(plain)} символов):")
+        print(f"'{plain[:200]}{'...' if len(plain) > 200 else ''}'")
+        
+        # Проверяем text_html
+        html = data.get('text_html')
+        if not isinstance(html, str):
+            print(f"[WARNING] Некорректный text_html (не строка): {html}")
+            html = ""
+        print(f"TEXT_HTML ({len(html)} символов):")
+        print(f"'{html[:200]}{'...' if len(html) > 200 else ''}'")
+        
+        # Проверяем entities
+        entities = data.get('entities', [])
+        if entities:
+            print(f"ENTITIES ({len(entities)}): {entities[:3]}{'...' if len(entities) > 3 else ''}")
+        
+        print("-" * 50) 

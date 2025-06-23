@@ -1,0 +1,77 @@
+{
+  "msg_id": 714,
+  "channel": "@makecryptogreat",
+  "date": "2025-05-30T10:30:15+00:00",
+  "plain_text": "Идти против Джеймса Уинна - это win \n\n0x2258 вел контрторговлю Джеймса — открывал шорт, когда Джеймс был открывал в Лонге, и наоборот. \n\nЗа последнюю неделю 0x2258 заработал ~$17m, а Джеймс Уинн потерял ~$98m.\n\nПредыстория\n\n24 мая трейдер 0x2258 начал продавать $BTC и $ETH , в то время как Джеймс Уинн лонговал $BTC .\n\n25 мая, когда Джеймс Уинн закрыл Лонги, трейдер 0x2258 закрыл свой шорт, получив прибыль в размере $1,36m.\n\n25 мая, когда Джеймс Уинн перешел от лонга  к шорту $BTC , трейдер 0x2258 открыл лонг $BTC и $ETH .\n\n26 мая, 0x2258 закрыл свои лонги получив прибыль в размере $2,54m.\n\n26 мая, в контртрейде 0x2258 получил $1,7m.\n\nИ такой контр игрой заработал $17m\n\nВот ссылка на героя\nhyperdash.info/trader/0x225864AD63BA66272cD6bE3E65476A2EBA48c215\n\nИ на Джеймса Уина\nhyperdash.info/trader/0x5078C2fBeA2b2aD61bc840Bc023E35Fce56BeDb6\n\nhttps://x.com/lookonchain/status/1928272951528358069?s=46&t=Au-4I4batatcfBlx-AzL_w",
+  "text_html": "<div style=\"white-space: pre-wrap;\"><b>Идти против Джеймса Уинна - это win </b><br><br>0x2258 вел контрторговлю Джеймса — открывал шорт, когда Джеймс был открывал в Лонге, и наоборот. <br><br><b>За последнюю неделю 0x2258 заработал ~$17m</b>, а Джеймс Уинн потерял ~$98m.<br><br><b>Предыстория</b><br><br>24 мая трейдер 0x2258 начал продавать $BTC и $ETH , в то время как Джеймс Уинн лонговал $BTC .<br><br>25 мая, когда Джеймс Уинн закрыл Лонги, трейдер 0x2258 закрыл свой шорт, получив прибыль в размере $1,36m.<br><br>25 мая, когда Джеймс Уинн перешел от лонга  к шорту $BTC , трейдер 0x2258 открыл лонг $BTC и $ETH .<br><br>26 мая, 0x2258 закрыл свои лонги получив прибыль в размере $2,54m.<br><br>26 мая, в контртрейде 0x2258 получил $1,7m.<br><br>И такой контр игрой заработал $17m<br><br>Вот ссылка на героя<br><a href=\"#\">hyperdash.info/trader/0x225864AD63BA66272cD6bE3E65476A2EBA48c215</a><br><br>И на Джеймса Уина<br><a href=\"#\">hyperdash.info/trader/0x5078C2fBeA2b2aD61bc840Bc023E35Fce56BeDb6</a><br><br><a href=\"#\">https://x.com/lookonchain/status/1928272951528358069?s=46&amp;t=Au-4I4batatcfBlx-AzL_w</a></div>",
+  "summary": "Трейдер 0x2258 заработал около $17 миллионов, активно контрторгуя против Джеймса Уинна, который потерял около $98 миллионов. 0x2258 открывал позиции в противоположном направлении к действиям Уинна, что принесло ему значительную прибыль.",
+  "entities": [
+    {
+      "type": "MessageEntityBold",
+      "length": 36,
+      "offset": 0
+    },
+    {
+      "type": "MessageEntityBold",
+      "length": 42,
+      "offset": 137
+    },
+    {
+      "type": "MessageEntityBold",
+      "length": 11,
+      "offset": 211
+    },
+    {
+      "type": "MessageEntityCashtag",
+      "length": 4,
+      "offset": 262
+    },
+    {
+      "type": "MessageEntityCashtag",
+      "length": 4,
+      "offset": 269
+    },
+    {
+      "type": "MessageEntityCashtag",
+      "length": 4,
+      "offset": 312
+    },
+    {
+      "type": "MessageEntityCashtag",
+      "length": 4,
+      "offset": 480
+    },
+    {
+      "type": "MessageEntityCashtag",
+      "length": 4,
+      "offset": 514
+    },
+    {
+      "type": "MessageEntityCashtag",
+      "length": 4,
+      "offset": 521
+    },
+    {
+      "type": "MessageEntityUrl",
+      "length": 64,
+      "offset": 698
+    },
+    {
+      "type": "MessageEntityUrl",
+      "length": 64,
+      "offset": 782
+    },
+    {
+      "type": "MessageEntityUrl",
+      "length": 82,
+      "offset": 848
+    }
+  ],
+  "export_info": {
+    "exported_at": "2025-06-22T15:32:18.306122",
+    "post_length": 930,
+    "entities_count": 12,
+    "has_html": true,
+    "has_summary": true
+  }
+}

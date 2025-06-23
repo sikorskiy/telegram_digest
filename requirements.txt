@@ -1,0 +1,27 @@
+# Основные зависимости
+typer>=0.9.0
+click>=8.0.0
+python-dotenv>=1.0.0
+
+# Telegram API
+telethon>=1.28.0
+
+# Firebase
+firebase-admin>=6.0.0
+
+# OpenAI
+openai>=1.0.0
+
+# YAML
+pyyaml>=6.0
+
+# HTML/PDF
+weasyprint>=60.0
+jinja2>=3.1.0
+
+# EPUB
+ebooklib>=0.18.0
+beautifulsoup4>=4.12.0
+
+# HTML to text (если понадобится)
+html2text>=2020.1.16 
