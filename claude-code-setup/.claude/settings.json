@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "src/",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/user/telegram_digest && (command -v black >/dev/null 2>&1 && black . --quiet 2>/dev/null || true) && (command -v isort >/dev/null 2>&1 && isort . --quiet 2>/dev/null || true); exit 0"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh -c 'if echo \"$ARGUMENTS\" | grep -qE \"(rm -rf /|reset --hard HEAD~[5-9]|DROP TABLE|DROP DATABASE|--force.*main|--force.*master)\"; then echo \"❌ Заблокировано: опасная команда\" >&2; exit 2; fi'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/user/telegram_digest 2>/dev/null && (git status --short | head -5 || true); exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}
